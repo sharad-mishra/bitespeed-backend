@@ -5,13 +5,6 @@ import sequelize from './utils/db';
 
 const app = express();
 app.use(json());
-
-// Request logging middleware
-app.use((req: Request, res: Response, next: NextFunction) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
-  next();
-});
-
 app.use('/identify', identifyRouter);
 
 // Error-handling middleware

@@ -7,15 +7,15 @@
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": "password",
+    "username": "postgres",
+    "password": "postgres",
     "database": "bitespeed_db_test",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres"
   },
   "production": {
     "use_env_variable": "DATABASE_URL",
-    "dialect": "mysql",
+    "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
         "require": true,

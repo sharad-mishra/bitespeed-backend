@@ -1,7 +1,9 @@
 import { Sequelize, DataTypes } from 'sequelize';
 import fs from 'fs';
 import path from 'path';
-import config from '../config/config.json';
+import configJson from '../config/config.json';
+
+const config: { [key: string]: any } = configJson; // Add this line
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';

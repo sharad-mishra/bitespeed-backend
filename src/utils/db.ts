@@ -1,25 +1,49 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize, Options } from 'sequelize';
 import config from '../config/config.json';
 
-const env = process.env.NODE_ENV || 'development';
-const dbConfig = config[env];
+// Define the structure of config.json
+interface DatabaseConfig {
+  username?: string;
+  password?: string;
+  database?: string;
+  host?: string;
+  dialect: 'mysql' | 'postgres';
+  use_env_variable?: string;
+  dialectOptions?: {
+    ssl?: {
+      require: boolean;
+      rejectUnauthorized: boolean;
+    };
+  };
+}
+
+interface Config {
+  development: DatabaseConfig;
+  test: DatabaseConfig;
+  production: DatabaseConfig;
+}
+
+const typedConfig: Config = config as any;
+
+const env = (process.env.NODE_ENV || 'development') as keyof Config;
+const dbConfig = typedConfig[env];
 
 let sequelize: Sequelize;
 
-if (env === 'production' && dbConfig.use_env_variable) {
+if (dbConfig.use_env_variable) {
   sequelize = new Sequelize(process.env[dbConfig.use_env_variable]!, {
-    dialect: 'mysql',
+    ...dbConfig,
     logging: false,
-  });
+  } as Options);
 } else {
   sequelize = new Sequelize(
-    dbConfig.database,
-    dbConfig.username,
-    dbConfig.password,
+    dbConfig.database!,
+    dbConfig.username!,
+    dbConfig.password!,
     {
       ...dbConfig,
       logging: false,
-    }
+    } as Options
   );
 }
 

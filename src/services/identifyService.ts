@@ -40,7 +40,7 @@ export class IdentifyService {
       throw new Error('At least one of email or phoneNumber must be provided');
     }
 
-    const matchingContacts = await this.contactRepository.findByEmailOrPhone(email, phoneNumber);
+    const matchingContacts = await this.contactRepository.findByEmailOrPhone(email ?? null, phoneNumber ?? null);
     console.log(`Found ${matchingContacts.length} matching contacts`);
 
     if (matchingContacts.length === 0) {
