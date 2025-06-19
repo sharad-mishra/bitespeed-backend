@@ -34,13 +34,17 @@ export class IdentifyService {
   }
 
   async identify({ email, phoneNumber }: IdentifyRequest): Promise<IdentifyResponse> {
+    console.log(`Processing identify request - Email: ${email || 'none'}, Phone: ${phoneNumber || 'none'}`);
+
     if (!email && !phoneNumber) {
       throw new Error('At least one of email or phoneNumber must be provided');
     }
 
     const matchingContacts = await this.contactRepository.findByEmailOrPhone(email, phoneNumber);
+    console.log(`Found ${matchingContacts.length} matching contacts`);
 
     if (matchingContacts.length === 0) {
+      console.log('Creating new primary contact');
       const newContact = await this.contactRepository.createContact(
         email || null,
         phoneNumber || null,
@@ -62,6 +66,7 @@ export class IdentifyService {
       const primary = await this.getPrimary(contact);
       primaries.add(primary.id);
     }
+    console.log(`Found ${primaries.size} primary contacts`);
 
     let oldestPrimary: Contact | null = null;
     if (primaries.size > 1) {
@@ -101,6 +106,7 @@ export class IdentifyService {
     const newPhoneNumber = phoneNumber && !phoneNumbersSet.has(phoneNumber);
 
     if (newEmail || newPhoneNumber) {
+      console.log('Creating new secondary contact with new contact information');
       const newSecondary = await this.contactRepository.createContact(
         email || null,
         phoneNumber || null,
