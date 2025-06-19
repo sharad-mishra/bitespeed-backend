@@ -33,10 +33,10 @@ export class ContactRepository {
     linkedId: number | null
   ) {
     return Contact.create({
-      email,
-      phoneNumber,
-      linkPrecedence,
-      linkedId,
+      email: email,
+      phoneNumber: phoneNumber,
+      linkPrecedence: linkPrecedence,
+      linkedId: linkedId,
       createdAt: new Date(),
       updatedAt: new Date(),
     });

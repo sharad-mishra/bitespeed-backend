@@ -1,16 +1,16 @@
 {
   "development": {
     "username": "root",
-    "password": "MYSQL@123456",
+    "password": "MySQL@123456",
     "database": "bitespeed_db",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
     "password": "password",
     "database": "bitespeed_db_test",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "production": {

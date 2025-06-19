@@ -5,7 +5,7 @@ const env = process.env.NODE_ENV || 'development';
 const dbConfig = config[env];
 
 const sequelize = new Sequelize(
-  dbConfig.database || process.env[dbConfig.use_env_variable],
+  dbConfig.use_env_variable ? process.env[dbConfig.use_env_variable]! : dbConfig.database,
   dbConfig.username,
   dbConfig.password,
   {
